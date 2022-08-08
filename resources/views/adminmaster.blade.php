@@ -60,7 +60,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-right">
-                                        <a href="{{url("/auth/logout")}}" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="{{url("/logout")}}" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -87,9 +87,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
               <li class="header">Menu</li>
               <li class="active"><a href="{{url("/admin")}}"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
-              <li class="treeview">
-                <a href="{{url('/admin/users')}}"><span>User Managment</span></a>
-              </li>
+              @if(Auth()->user()->user_group_id == 1)
+                <li class="treeview">
+                  <a href="{{url('/admin/users')}}"><span>User Managment</span></a>
+                </li>
+              @endif
               <li class="treeview">
                 <a href="{{url('/admin/articles')}}"><span>Article Managment</span></a>
               </li>

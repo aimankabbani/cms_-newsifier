@@ -68,4 +68,17 @@ class UserService
 
       return $users->limit(10)->get();
     }
+
+    public static function loadByEmail($email){
+      return User::where('email','=',$email)->get()->first();
+    }
+
+    public static function singup($email,$password){
+      $user['email'] = $email;
+      $user['password'] = $password;
+      $user['name'] = '';
+      $user['id'] = 0;
+      $user['user_group_id'] = User::GROUP_USER;
+      return self::saveUpdate($user);
+    }
 }

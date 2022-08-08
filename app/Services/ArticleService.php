@@ -3,10 +3,11 @@
 namespace App\Services;
 
 use App\Models\Article;
+use App\Models\User;
 
 class ArticleService
 {
-  public static function load($filter)
+  public static function load($filter,$user)
     {
       $index = $filter ? $filter['pageIndex'] : 1;
       $pageSize = $filter ? $filter['pageSize'] : 10;
@@ -19,6 +20,10 @@ class ArticleService
 
       if($filter['title_en']){
         $articles->where('title_en','like','%'.$filter['title_en'].'%');
+      }
+
+      if($user->user_group_id != User::GROUP_ADMIN){
+        $articles->where('user_id','=',$user->id);
       }
 
       $articles->orderBy('id', 'desc');

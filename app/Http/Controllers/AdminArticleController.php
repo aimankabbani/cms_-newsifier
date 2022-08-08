@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use Auth;
 
 use App\Services\ArticleService;
 use App\Models\Article;
@@ -16,7 +17,8 @@ class AdminArticleController extends Controller
 
   public function data(Request $request){
     $filter = $request->input('filter');
-    return ArticleService::load($filter);
+    $user = Auth::user();
+    return ArticleService::load($filter,$user);
   }
 
   public function createPage(){
@@ -32,7 +34,6 @@ class AdminArticleController extends Controller
         'content_ar' => 'required|string|min:50',
         'content_en' => 'required|string|min:50',
         'user_id' => 'required',
-
     ];
 
     $validator = Validator::make($article, $rules);
