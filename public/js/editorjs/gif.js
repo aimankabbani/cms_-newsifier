@@ -8,6 +8,9 @@ class GifEditor {
   }
 
   render(){
+    let final = document.createElement("div");;
+    const div = document.createElement("div");
+    div.classList.add('gif-table');
     const button = swal({
         title: 'Search For GIF',
         input: 'text',
@@ -18,20 +21,50 @@ class GifEditor {
         confirmButtonText: 'Look up',
         showLoaderOnConfirm: true,
         preConfirm: (term) => {
+
             $.ajax({
                 type: "POST",
                 url: `/api/gif/${term}`,
                 headers: {
                     "x-csrf-token": $("[name=_token]").val()
                 },
-            }).done(response => {
-              console.log(response);
+            }).done(data => {
+              let ul =  document.createElement("ul");
+              data.map(function(d){
+                let li =  document.createElement("li");
+                let input =  document.createElement("input");
+                input.type = 'checkbox';
+                input.value = d.url;
+                input.id= d.id;
+                // input
+                li.appendChild(input);
+                let label =  document.createElement("label");
+                label.setAttribute('for',d.id);
+                let img = document.createElement("img");
+                img.src = d.url;
+                img.classList.add('responsive')
+                label.appendChild(img);
+
+                li.appendChild(label);
+                ul.appendChild(li);
+              });
+              div.appendChild(ul);
+
+              swal({
+                title:'Select GIfs',
+                html:div
+              }).then(function(){
+                $("input[type=checkbox]:checked").map((data,v) => {
+                  let img = document.createElement("img");
+                  img.src = v.value;
+                  final.appendChild(img);
+                });
+              })
             });
           },
-        allowOutsideClick: () => !Swal.isLoading()
-      }).then((result) => {
-      })
-    return button;
+      }).then(() => {
+      });
+      return final;
   }
 
   save(blockContent){

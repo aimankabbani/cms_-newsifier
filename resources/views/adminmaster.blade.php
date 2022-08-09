@@ -32,6 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     {{-- sweetalert --}}
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/static/sweetalert/sweetalert2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/admin/custom.css') }}">
     @yield('head')
 </head>
 <body class="skin-blue">

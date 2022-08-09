@@ -28,6 +28,7 @@ class AdminArticleController extends Controller
 
   public function createPost(Request $request){
     $article = $request->all();
+    dd($article);
     $rules = [
         'title_ar' => 'required|string|min:4',
         'title_en' => 'required|string|min:4',

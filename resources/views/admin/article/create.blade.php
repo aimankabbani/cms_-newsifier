@@ -82,7 +82,6 @@
               <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                               aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title" id="myModalLabel">Add New Subsctiption Model</h4>
               </div>
               <div class="modal-body">
 
@@ -101,18 +100,23 @@
   // import Swal from 'sweetalert2';
     // load users
     (function ($){
-
       loadSelect2Users();
       let content_ar = $('input[name=content_ar_pre]').val();
-      console.log(content_ar);
       const editor = new EditorJS({
       holder: 'content_ar',
-      inlineToolbar: ['link', 'marker', 'bold', 'italic'],
-      data: {content_ar},
+      // inlineToolbar: ['link', 'marker', 'bold', 'italic'],
+      // data: {content_ar},
       tools: {
         header: GifEditor,
       },
     });
+    
+    $('form').on('submit',function(e){
+      e.preventDefault();
+      blocks = editor;
+      console.log(blocks);
+    })
+
     })(jQuery);
 
     function loadSelect2Users(){
