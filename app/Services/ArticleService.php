@@ -61,4 +61,15 @@ class ArticleService
     public static function delete($id){
       return Article::where('id','=',$id)->delete();
     }
+
+    public static function lazyLoad($page = 0){
+      $page = !empty($page) ? (int)$page : 0;
+      return Article::select('title_ar','title_en','content_ar','content_en','user_id','created_at')
+      ->with(['user' => function($query){
+        $query->addSelect('id','name','email');
+      }])
+      ->take(10)
+      ->skip(10 * $page)
+      ->get();
+    }
 }

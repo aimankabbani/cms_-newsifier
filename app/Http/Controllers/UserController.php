@@ -32,7 +32,7 @@ class UserController extends Controller
        'email' => 'required|string|email|regex:/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,10})$/i|max:255|exists:users',
        'password' => ['required',
        function ($attribute, $value, $fail) use ($user) {
-         if(!Hash::check($value, $user->password)){
+         if(empty($user) || !Hash::check($value, $user->password)){
            $fail('Invalid Password');
          }
        }]
