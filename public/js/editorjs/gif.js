@@ -9,7 +9,7 @@ class GifEditor {
 
   render(){
     let final = document.createElement("div");;
-    const div = document.createElement("div");
+    let div = document.createElement("div");
     div.classList.add('gif-table');
     const button = swal({
         title: 'Search For GIF',
@@ -64,12 +64,13 @@ class GifEditor {
           },
       }).then(() => {
       });
-      return final;
+      this.wrapper = final;
+      return this.wrapper;
   }
 
   save(blockContent){
     return {
-      url: blockContent.value
+      img: blockContent
     }
   }
 }

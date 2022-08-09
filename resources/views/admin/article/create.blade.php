@@ -49,6 +49,7 @@
                         <div id="content_ar">
                         </div>
                         {!! Form::hidden('content_ar_pre', $article->content_ar , ['class' => 'form-control content-data','placeholder'=>'Content AR']) !!}
+                        {!! Form::hidden('content_ar_custom', '' , ['class' => 'form-control content-data','placeholder'=>'Content AR']) !!}
                     </div>
 
                     <div class="form-group">
@@ -96,59 +97,5 @@
 @section('scripts')
   <script type="text/javascript" src={{ URL::asset('/js/editorjs/editor.js') }}></script>
   <script type="text/javascript" src={{ URL::asset('/js/editorjs/gif.js') }}></script>
-  <script>
-  // import Swal from 'sweetalert2';
-    // load users
-    (function ($){
-      loadSelect2Users();
-      let content_ar = $('input[name=content_ar_pre]').val();
-      const editor = new EditorJS({
-      holder: 'content_ar',
-      // inlineToolbar: ['link', 'marker', 'bold', 'italic'],
-      // data: {content_ar},
-      tools: {
-        header: GifEditor,
-      },
-    });
-    
-    $('form').on('submit',function(e){
-      e.preventDefault();
-      blocks = editor;
-      console.log(blocks);
-    })
-
-    })(jQuery);
-
-    function loadSelect2Users(){
-      $('#user_id').off().on('select2:select', function (e) {
-      }).select2({
-          theme: 'classic',
-          placeholder:'User',
-
-          ajax: {
-              url: '/api/admin/load-users',
-              dataType: "json",
-              method:'POST',
-              cache:true,
-              data: function (params) {
-                  var queryParameters = {
-                      term: params.term
-                  };
-                  return queryParameters;
-              },
-              processResults: function (users) {
-                  return {
-                      results: $.map(users, function (user) {
-                          return {
-                              text: user.email,
-                              id: user.id
-                          }
-                      })
-                  };
-              }
-          }
-      });
-      selectDefault($('[name=selected_user]'),$('#user_id'));
-    }
-  </script>
+  <script type="text/javascript" src={{ URL::asset('/js/admin/articles.create.js') }}></script>
 @endsection
