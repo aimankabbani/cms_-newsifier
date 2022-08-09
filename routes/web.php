@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminArticleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,7 +28,7 @@ Route::post('signup',[UserController::class,'signupPost'])->name('signup.post');
 
 Route::prefix('admin')->group(function(){
   Route::group(['middleware' => 'auth'],function(){
-    Route::get('/', [AdminController::class,'index'])->name('admin.view');
+    Route::get('/admin', [AdminController::class,'index'])->name('admin.view');
 
     // Users
     Route::group(['middleware' => 'admin'],function(){
@@ -48,3 +49,6 @@ Route::prefix('admin')->group(function(){
     Route::post('article/delete/{id}',[AdminArticleController::class,'delete'])->name('admin.article.delete');
   });
 });
+
+// Test Controller
+Route::get('/test/gif',[TestController::class,'testGif'])->name('testGif');

@@ -8,7 +8,7 @@ class GifEditor {
   }
 
   render(){
-    const button = Swal.fire({
+    const button = swal({
         title: 'Search For GIF',
         input: 'text',
         inputAttributes: {
@@ -17,29 +17,19 @@ class GifEditor {
         showCancelButton: true,
         confirmButtonText: 'Look up',
         showLoaderOnConfirm: true,
-        preConfirm: (login) => {
-          return fetch(`//api.github.com/users/${login}`)
-            .then(response => {
-              if (!response.ok) {
-                throw new Error(response.statusText)
-              }
-              console.log(response.json());
-              return response.json()
-            })
-            .catch(error => {
-              Swal.showValidationMessage(
-                `Request failed: ${error}`
-              )
-            })
-        },
+        preConfirm: (term) => {
+            $.ajax({
+                type: "POST",
+                url: `/api/gif/${term}`,
+                headers: {
+                    "x-csrf-token": $("[name=_token]").val()
+                },
+            }).done(response => {
+              console.log(response);
+            });
+          },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire({
-            title: `${result.value.login}'s avatar`,
-            imageUrl: result.value.avatar_url
-          })
-        }
       })
     return button;
   }

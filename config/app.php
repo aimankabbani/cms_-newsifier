@@ -195,6 +195,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Giphy
+        Romeroqe\Giphy\GiphyServiceProvider::class,
+	      Romeroqe\Giphy\StickersServiceProvider::class,
+
     ],
 
     /*
@@ -210,6 +214,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        // Giphy
+        'Giphy' => Romeroqe\Giphy\GiphyFacade::class,
+	      'Stickers' => Romeroqe\Giphy\StickersFacade::class,
     ])->toArray(),
 
 ];
